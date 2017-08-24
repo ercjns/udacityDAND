@@ -30,10 +30,27 @@ plt.show()
 
 ### your code here!  name your classifier object clf if you want the 
 ### visualization code (prettyPicture) to show you the decision boundary
+from time import time
+
+### k nearest neighbors (k-NN)
+### looks at what's around a point, classifies based on that. sometimes weighted.
+### can be good when the decision boundary is irregular
+from sklearn.neighbors import KNeighborsClassifier
+clf = KNeighborsClassifier(n_neighbors=5)
+t0 = time()
+clf.fit(features_train, labels_train)
+print 'training time: {}s'.format(round(time()-t0, 3)) # .002
+print 'accuracy: {}'.format(clf.score(features_test, labels_test)) # .928
 
 
-
-
+### adaboost
+### uses a decision tree, then adjusts where the DT makes some mistakes
+# from sklearn.ensemble import AdaBoostClassifier
+# clf = AdaBoostClassifier(n_estimators=50)
+# t0 = time()
+# clf.fit(features_train, labels_train)
+# print 'training time: {}s'.format(round(time()-t0, 3)) # .068
+# print 'accuracy: {}'.format(clf.score(features_test, labels_test)) # .924
 
 
 
