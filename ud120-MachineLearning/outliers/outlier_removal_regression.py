@@ -28,11 +28,14 @@ ages_train, ages_test, net_worths_train, net_worths_test = train_test_split(ages
 
 
 
+from sklearn.linear_model import LinearRegression
+reg = LinearRegression()
+reg.fit(ages_train, net_worths_train)
+print 'Slope: {}'.format(reg.coef_)
+print 'Intercept: {}'.format(reg.intercept_)
 
-
-
-
-
+print 'Score (TRAIN): {}'.format(reg.score(ages_train, net_worths_train))
+print 'Score (TEST): {}'.format(reg.score(ages_test, net_worths_test))
 
 
 
@@ -68,6 +71,9 @@ if len(cleaned_data) > 0:
     ### refit your cleaned data!
     try:
         reg.fit(ages, net_worths)
+        print 'New Slope: {}'.format(reg.coef_)
+        print 'New Intercept: {}'.format(reg.intercept_)
+        print 'New Score (TEST): {}'.format(reg.score(ages_test, net_worths_test))
         plt.plot(ages, reg.predict(ages), color="blue")
     except NameError:
         print "you don't seem to have regression imported/created,"
