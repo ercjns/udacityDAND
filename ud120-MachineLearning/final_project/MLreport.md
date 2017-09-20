@@ -19,32 +19,34 @@ With these 15 features, I figured I'd try a simple decision tree classifier to s
 
 ##### Decision Tree (15 Features)
 `Accuracy: 0.804     Precision: 0.236     Recall: 0.263`
+
 | Feature | Importance |
 | ------- | ---------- |
-|salary| 0.03971 |
-|deferral_payments| 0.00766 |
-|total_payments| 0.06904 |
-|**bonus**| 0.15360 |
-|total_stock_value| 0.07143 |
-|**expenses**| 0.11450 |
-|**exercised_stock_options**| 0.12682 |
-|**other**| 0.11401 |
-|long_term_incentive| 0.04422 |
-|restricted_stock| 0.05155 |
-|to_messages| 0.02743 |
-|from_poi_to_this_person| 0.03884 |
-|from_messages| 0.03756 |
-|from_this_person_to_poi| 0.05552 |
-|shared_receipt_with_poi| 0.04811 |
+| salary | 0.03971 |
+| deferral_payments | 0.00766 |
+| total_payments | 0.06904 |
+| **bonus** | 0.15360 |
+| total_stock_value | 0.07143 |
+| **expenses** | 0.11450 |
+| **exercised_stock_options** | 0.12682 |
+| **other** | 0.11401 |
+| long_term_incentive | 0.04422 |
+| restricted_stock | 0.05155 |
+| to_messages | 0.02743 |
+| from_poi_to_this_person | 0.03884 |
+| from_messages | 0.03756 |
+| from_this_person_to_poi | 0.05552 |
+| shared_receipt_with_poi | 0.04811 |
 
 ##### Decision Tree (4 Features)
 `Accuracy: 0.827    Precision: 0.357    Recall: 0.351`
+
 | Feature | Importance |
 | ------- | ---------- |
-|bonus| 0.26898 |
-|expenses| 0.23925 |
-|exercised_stock_options| 0.24448 |
-|other| 0.24730 |
+| bonus | 0.26898 |
+| expenses | 0.23925 |
+| exercised_stock_options | 0.24448 |
+| other | 0.24730 |
 
 Because I'm using a decision tree classifier to predict categories and am not doing regression, I did not do any scaling, as it's not necessary in this type of classifier.
 
@@ -52,13 +54,14 @@ One thing I noticed here is that I now have no features from the email data in m
 
 ##### Decision Tree (5 Features)
 `Accuracy: 0.821    Precision: 0.322    Recall: 0.343`
+
 | Feature | Importance |
 | ------- | ---------- |
-|bonus| 0.19102 |
-|expenses| 0.18387 |
-|exercised_stock_options| 0.20096 |
-|other| 0.19682 |
-|poi_mail_rate| 0.22733 |
+| bonus | 0.19102 |
+| expenses | 0.18387 |
+| exercised_stock_options | 0.20096 |
+| other | 0.19682 |
+| poi_mail_rate | 0.22733 |
 
 
 ### 3. What algorithm did you end up using? What other one(s) did you try? How did model performance differ between algorithms?
