@@ -11,9 +11,13 @@ from tester import dump_classifier_and_data
 ### features_list is a list of strings, each of which is a feature name.
 ### The first feature must be "poi".
 
-finance_features = ['salary', 'deferral_payments', 'total_payments', 'loan_advances', 'bonus', 'restricted_stock_deferred', 'deferred_income', 'total_stock_value', 'expenses', 'exercised_stock_options', 'other', 'long_term_incentive', 'restricted_stock', 'director_fees']
+finance_features = ['salary', 'deferral_payments', 'total_payments', 
+    'loan_advances', 'bonus', 'restricted_stock_deferred', 'deferred_income',
+    'total_stock_value', 'expenses', 'exercised_stock_options', 'other', 
+    'long_term_incentive', 'restricted_stock', 'director_fees']
 
-email_features = ['to_messages', 'from_poi_to_this_person', 'from_messages', 'from_this_person_to_poi', 'shared_receipt_with_poi']
+email_features = ['to_messages', 'from_poi_to_this_person', 'from_messages', 
+    'from_this_person_to_poi', 'shared_receipt_with_poi']
 
 all_features = ['poi'] + finance_features + email_features
 
@@ -37,6 +41,8 @@ with open("final_project_dataset.pkl", "r") as data_file:
 
 ### Task 2: Remove outliers
 data_dict.pop('TOTAL', 0) # identified in the the outliers lesson
+data_dict.pop('THE TRAVEL AGENCY IN THE PARK', 0) # 2 datapoints, not a person
+data_dict.pop('LOCKHART EUGENE E', 0) # no data for this person
 
 ### Task 3: Create new feature(s)
 # Bonus rate: bonus / salary
@@ -45,7 +51,9 @@ for person, data in data_dict.items():
         data['bonus_rate'] = 'NaN'
     else:
         data['bonus_rate'] = float(data['bonus']) / float(data['salary'])
-
+# Poi Mail 'rate': sum of
+#   from POI to this person / to meassages
+#   from this person to poi / from messages
     if data['to_messages'] == 'NaN' or data['from_messages'] == 'NaN':
         data['poi_mail_rate'] = 'NaN'
     else:
@@ -60,6 +68,11 @@ my_dataset = data_dict
 # print 'POIs {}'.format(sum([x['poi'] for x in my_dataset.values()]))
 print 'Features being Used: {}'.format(len(features_list)-1)
 print 'Features: {}'.format(features_list)
+
+# for k,v in data_dict.items():
+#     data = sum([1 for x in v.values() if x != 'NaN'])
+#     if data < 10: # People low on data
+#         print '{}\t{}'.format(k, data)
 
 # all_feature_names = data_dict.values()[0].keys()
 # import matplotlib.pyplot as plt

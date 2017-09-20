@@ -8,13 +8,12 @@ The collapse of Enron is one of the largest business scandals of modern history 
 
 Before diving in, it's a good idea to get a more detailed idea of the data available. The provided dataset has information about 146 individuals with up to 22 features for each individual, though not all individuals have data for every feature. The dataset also already includes a `poi` feature which is a simple boolean classification for which of these individuals have already been identified as persons of interest: there are 18. Without this pre-classification, the dataset would probably be too small to work with. Additionally, when picking features to use in the ML classifier, I'll be sure to pick features which have data from both `poi:true` and `poi:false` individuals or else the feature is likely to throw off the classifier. 
 
-There is one outlier to be removed: the financial data was scraped from a spreadsheet and mistakenly scraped the `TOTAL` column and recorded that as another individual. I removed this datapoint, but will keep all the others (total of 145 individuals).
-
+There is one outlier I removed: the financial data was scraped from a spreadsheet and mistakenly scraped the `TOTAL` column and recorded that as another individual. At this point, I'm also going to remove two other datapoints: `LOCKHART EUGENE E` has no reported data other than `POI:False` which doesn't help us, and `THE TRAVEL AGENCY IN THE PARK` appears to not be a person, so I'm skeptical of including it as I'd expect an agency to have different characteristics than a person. That leaves me with 143 individuals in the dataset.
 
 ### 2. What features did you end up using in your POI identifier, and what selection process did you use to pick them? Did you have to do any scaling? Why or why not? As part of the assignment, you should attempt to engineer your own feature that does not come ready-made in the dataset -- explain what feature you tried to make, and the rationale behind it.
 I used the `exercised_stock_options`, `bonus`, and `expenses`, and `other` in my POI identifier. Because there are few features (19) and a very small number of data points (145), I wanted to use only a few features, if possible, in order to combat possible overfitting due to trying to match too many feature characteristics. To narrow down the list, I first took advantage of the fact that the data is already labeled, and removed features which did not include a representative split of the data for that specific feature, or for which there were simply too few data points for me to feel confident including that feature in the classifier.
 
-For example, the labeled data identifies 18 POIs within the 145 points, or about 12% POI. I discarded `deferred_income` because with 11 of 49 features, the 22% POI rate was too far from the actual data. Similarly, I discarded `director_fees` because in addition to only having this data for 17 of the people in the data set, *none* of them are identified as POIs. I also discarded `loan_advances` (1 POI of 4) and `restricted_stock_deferred` (0 POI of 18) at this step. 
+For example, the labeled data identifies 18 POIs within the 143 points, or about 12.5% POI. I discarded `deferred_income` because with 11 of 49 features, the 22% POI rate was too far from the actual data. Similarly, I discarded `director_fees` because in addition to only having this data for 17 of the people in the data set, *none* of them are identified as POIs. I also discarded `loan_advances` (1 POI of 4) and `restricted_stock_deferred` (0 POI of 18) at this step. 
 
 With these 15 features, I figured I'd try a simple decision tree classifier to see where I stand. Looking at the feature importances for this decision tree, four features account for over 50% of the variation, and there's a drop off in individual feature importance after those four so I'll try again with just those features. Using just `bonus`, `expenses`, `exercised_stock_options`, and `other` in a decision tree actually does quite well: Accuracy: 0.827, Precision: 0.357, Recall: 0.351.
 
@@ -22,30 +21,30 @@ With these 15 features, I figured I'd try a simple decision tree classifier to s
 `Accuracy: 0.804     Precision: 0.236     Recall: 0.263`
 | Feature | Importance |
 | ------- | ---------- |
-salary| 0.03971
-deferral_payments| 0.00766
-total_payments| 0.06904
-**bonus**| 0.15360
-total_stock_value| 0.07143
-**expenses**| 0.11450
-**exercised_stock_options**| 0.12682
-**other**| 0.11401
-long_term_incentive| 0.04422
-restricted_stock| 0.05155
-to_messages| 0.02743
-from_poi_to_this_person| 0.03884
-from_messages| 0.03756
-from_this_person_to_poi| 0.05552
-shared_receipt_with_poi| 0.04811
+|salary| 0.03971 |
+|deferral_payments| 0.00766 |
+|total_payments| 0.06904 |
+|**bonus**| 0.15360 |
+|total_stock_value| 0.07143 |
+|**expenses**| 0.11450 |
+|**exercised_stock_options**| 0.12682 |
+|**other**| 0.11401 |
+|long_term_incentive| 0.04422 |
+|restricted_stock| 0.05155 |
+|to_messages| 0.02743 |
+|from_poi_to_this_person| 0.03884 |
+|from_messages| 0.03756 |
+|from_this_person_to_poi| 0.05552 |
+|shared_receipt_with_poi| 0.04811 |
 
 ##### Decision Tree (4 Features)
 `Accuracy: 0.827    Precision: 0.357    Recall: 0.351`
 | Feature | Importance |
 | ------- | ---------- |
-bonus| 0.26898
-expenses| 0.23925
-exercised_stock_options| 0.24448
-other| 0.24730
+|bonus| 0.26898 |
+|expenses| 0.23925 |
+|exercised_stock_options| 0.24448 |
+|other| 0.24730 |
 
 Because I'm using a decision tree classifier to predict categories and am not doing regression, I did not do any scaling, as it's not necessary in this type of classifier.
 
@@ -55,11 +54,11 @@ One thing I noticed here is that I now have no features from the email data in m
 `Accuracy: 0.821    Precision: 0.322    Recall: 0.343`
 | Feature | Importance |
 | ------- | ---------- |
-bonus| 0.19102
-expenses| 0.18387
-exercised_stock_options| 0.20096
-other| 0.19682
-poi_mail_rate| 0.22733
+|bonus| 0.19102 |
+|expenses| 0.18387 |
+|exercised_stock_options| 0.20096 |
+|other| 0.19682 |
+|poi_mail_rate| 0.22733 |
 
 
 ### 3. What algorithm did you end up using? What other one(s) did you try? How did model performance differ between algorithms?
@@ -93,6 +92,10 @@ Accuracy: 0.856    Precision: 0.434    Recall: 0.355
 
 
 ### 4. What does it mean to tune the parameters of an algorithm, and what can happen if you don’t do this well?  How did you tune the parameters of your particular algorithm? What parameters did you tune?
+Parameter tuning is an important part of machine learning as it can affect the performance of a given algorithm. The goal of parameter tuning is to best overcome the weaknesses of an algorithm, given the dataset. For example, if you're working on a classification problem such as this project, the algorithm may have parameters that dictate a threshold for when to split a set of similar points into different classes (or not). For some datasets, it may be best for the algorithm to drill deeply into specific data points, while for other problems it may be better to keep larger groups together, even with some potentially mixed data. Parameter tuning also can affect the speed at which an algorithm can finish, such as when dictating a number of iterations for the algorithm to complete. Especially on large datasets, time to complete may be an important factor to consider when choosing and tuning an algorithm. 
+
+Simple tuning can be achieved by hand, by methodically testing different values and observing if and how the speed and performance change. Tuning can also be done in code with functions like GridSearch or RandomizedSearch, which can help to optimize many parameters at once or search over a wider range more quickly than by hand. Poor tuning can lead to a number of issues. The most obvious is that the default tuning is rarely the best for a given ML problem, so the performance will likely suffer if no tuning occurs. On the flip side, optimizing parameters to a training set can lead to over-fitting when the training and testing sets are not picked in a way that makes sense for the problem and available data.
+
 My final algorithm uses an AdaBoost classifier, which is based on a decision tree. AdaBoost runs many iterations of a decision tree, with it's own strategy for weighting different points in order to improve the classifier. AdaBoost's tuning is primarily for a speed / accuracy tradeoff: the `n_estimators` parameter tells AdaBoost how many iterations to run before stopping. Higher values can provide better accuracy (to a point), but slow down execution. I tried running AdaBoost with `n_estimators` set at 10, 25, 50, 100, and 250, and found that performance didn't improve much past `n_estimators = 50`.
 
 ```python
@@ -142,8 +145,14 @@ Because of the small amount of data available for this analysis, I validated my 
 
 To evaluate the algorithms, I measured Accuracy, Precision, and Recall. Accuracy is the easiest to understand - it is simply the ratio of correct predictions that the algorithm makes on testing data once it has been trained. My algorithm has an accuracy of about 85%, meaning that for a given set of factors (one data point) that is known to represent a POI or known to not represent a POI, the algorithm correctly classifies it 85% of the time.
 
-Precision and Recall are measurements that begin to explain what the algorithm might be doing in the cases where the classification is incorrect.
+Precision and Recall are measurements that begin to explain what the algorithm might be doing in the cases where the classification is incorrect. 
 
-Precision is the ratio of True Positives to all positives. This ratio will be high (close to one) if there are few false positives, and lower if the algorithm reports many false positives. This may be more or less important for any given situation. In this case, because I'm looking for possible POIs to investigate further, I'm ok with this ratio being a bit on the low side: false positives represent data points the algorithm thinks could be POIs, but are not classified that way in our original list. That said, they're a great first list for further investigation, as is the original intent of this study.
+I'll use a fictitious disease named *koupht* in a population of *Beelians* as an analogy. Let's say 10% of *Beelians* have *koupht*, and I've discovered a test that can detect the disease. I claim that my test is 95% accurate. That means that 19 out of 20 times, my test will correctly identify if a *Beelian* does or does not have *koupht*. But what about those other 5% of the tests? There are two cases: (a) some of these people have *koupht* but my test reported they are healthy so they are not given treatment even though they need it (statisticians call this set `false negatives`), and (b) some of these people are healthy, but were reported to have *koupht* and were subjected to unnecessary treatment (statisticians call this set `false positives`).
 
-Recall measures the ratio of true positives to false negatives and true positives, so it's high when there are few false negatives. Again, I want the algorithm to do reasonably well here so as not to be flooded with mistakes, but a middling ratio is ok in this situation. That said, false negatives tell me a bit less because I've already identified that these people *are* POIs, so I'd like my algorithm to correctly id them. I would want to investigate further if I believed that it's possible some of the people in the known POI list are not actually POIs.
+Precision explains how often moving on to treatment is the correct choice; precision drops when treatment is assigned to *Beelians* who are healthy and don't require it. (when there are many `false positives`)
+
+Recall explains how often the test failed to identify the disease; recall drops when *Beelians* who should have received treatment instead have their *koupht* go undetected. (when there are many `false negatives`)
+
+Depending on the real world situation, precision, recall, or both may be important. In the example, factors such as how harmful the disease is, how fast the disease spreads, and how expensive or invasive the treatment is all affect where I might want to focus on improving the test.
+
+Bringing this back to the Enron dataset and identifying new POIs, I'm going to assume that I don't need to further investigate the POIs which have already been identified. Given that, while I want good accuracy, I don't care too much about recall because poor recall represents people my algorithm missed as POIs but who have already been investigated. On the other hand, I'd like precision to be high, but not too high. The datapoints which bring down the precision score are the exact points I'm looking for: they represent people my algorithm thinks are POIs, but were not previously identified as POIs. This gives me a great place to start further investigation to possibly identify more POIs, which was the original goal.

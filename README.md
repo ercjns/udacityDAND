@@ -24,3 +24,10 @@ Exploring Open Street Map data using SQL
 Hypothesis testing and statistics such as *r squared* and *Cohen's d*. Data analysis on a set of stroop task data.
 
 [Problem Set](https://github.com/ercjns/udacityDAND/blob/master/p5-stroop/StroopTaskReport.pdf)
+
+## p6 Machine Learning
+Applying and evaluating machine learning algorithms to search for persons of interest related to the Enron Scandal.
+
+[Report](https://github.com/ercjns/udacityDAND/blob/master/ud120-MachineLearning/final_project/MLreport.md)
+
+[Code](https://github.com/ercjns/udacityDAND/blob/master/ud120-MachineLearning/final_project)
