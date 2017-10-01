@@ -20,6 +20,13 @@ Exploring Open Street Map data using SQL
 
 [Code](https://github.com/ercjns/udacityDAND/blob/master/p3-openstreetmap)
 
+## p4 Data Exploration
+Looking at the relationships between various chemical characteristics of White Wines using R.
+
+[Report](https://github.com/ercjns/udacityDAND/blob/master/p4-wine/WineExploration.html)
+
+[Code](https://github.com/ercjns/udacityDAND/blob/master/p4-wine/WineExploration.Rmd)
+
 ## p5 Inferential Statistics
 Hypothesis testing and statistics such as *r squared* and *Cohen's d*. Data analysis on a set of stroop task data.
 
