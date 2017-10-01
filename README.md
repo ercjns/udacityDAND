@@ -38,3 +38,10 @@ Applying and evaluating machine learning algorithms to search for persons of int
 [Report](https://github.com/ercjns/udacityDAND/blob/master/ud120-MachineLearning/final_project/MLreport.md)
 
 [Code](https://github.com/ercjns/udacityDAND/blob/master/ud120-MachineLearning/final_project)
+
+## p7 Visualization
+Telling a story about flight delays using Tableau
+
+[Report](https://github.com/ercjns/udacityDAND/blob/master/p7-flights/P7DataVizReport.md)
+
+[Viz on Tableau Public](https://public.tableau.com/views/On-TimePerformance_1/On-TimePerformance?:embed=y&:display_count=yes&publish=yes)
